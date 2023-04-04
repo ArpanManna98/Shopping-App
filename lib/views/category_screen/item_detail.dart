@@ -186,7 +186,10 @@ class ItemDetail extends StatelessWidget {
                                 IconButton(
                                     onPressed: () {}, icon: Icon(Icons.add)),
                                 10.widthBox,
-                                "(0 avilable)".text.color(textfieldGrey).make(),
+                                "Avilable(${data["p_quantity"]})"
+                                    .text
+                                    .color(textfieldGrey)
+                                    .make(),
                               ],
                             ),
                           ],
@@ -221,10 +224,7 @@ class ItemDetail extends StatelessWidget {
                         .fontFamily(semibold)
                         .make(),
                     10.heightBox,
-                    "dfjcfcfwqkuvacs whgefucvw  c wtefdutweku ytw feutdVFCjk kjvufkufvkf fdyhm"
-                        .text
-                        .color(darkFontGrey)
-                        .make(),
+                    "${data["p_description"]}".text.color(darkFontGrey).make(),
 
                     //Buttons section design
                     10.heightBox,
@@ -296,10 +296,11 @@ class ItemDetail extends StatelessWidget {
           ),
           SizedBox(
             child: ourButton(
-                color: redColor,
-                onPress: () {},
-                textColor: whiteColor,
-                title: "Add to Cart"),
+              color: redColor,
+              onPress: () {},
+              textColor: whiteColor,
+              title: "Add to Cart",
+            ),
             width: double.infinity,
             height: 60,
           ),
