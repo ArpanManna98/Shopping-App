@@ -1,5 +1,6 @@
 import 'package:eshop/consts/consts.dart';
 import 'package:eshop/consts/lists.dart';
+import 'package:eshop/controllers/product_controller.dart';
 import 'package:eshop/widgets_common/our_button.dart';
 
 class ItemDetail extends StatelessWidget {
@@ -10,6 +11,7 @@ class ItemDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller = Get.find<ProductController>();
     return Scaffold(
       backgroundColor: whiteColor,
       appBar: AppBar(
@@ -129,92 +131,136 @@ class ItemDetail extends StatelessWidget {
                         .make(),
                     // Colour Section
                     20.heightBox,
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            //********** In video's Design**********/
-                            // SizedBox(
-                            //   width: 100,
-                            //   child: "Colors: "
-                            //       .text
-                            //       .color(Color.fromARGB(255, 255, 77, 7))
-                            //       .make(),
-                            // ),
-                            //*********** My Design***********/
-                            "Colors: "
-                                .text
-                                .color(Color.fromARGB(255, 255, 77, 7))
-                                .make(),
-                            55.widthBox,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: List.generate(
-                                data["p_colours"].length,
-                                (index) => VxBox()
-                                    .size(40, 40)
-                                    .roundedFull
-                                    .color(Color(data["p_colours"][index])
-                                        .withOpacity(1.0))
-                                    .margin(EdgeInsets.symmetric(horizontal: 4))
+                    Obx(
+                      () => Column(
+                        children: [
+                          Row(
+                            children: [
+                              //********** In video's Design**********/
+                              // SizedBox(
+                              //   width: 100,
+                              //   child: "Colors: "
+                              //       .text
+                              //       .color(Color.fromARGB(255, 255, 77, 7))
+                              //       .make(),
+                              // ),
+                              //*********** My Design***********/
+                              "Colors: "
+                                  .text
+                                  .color(Color.fromARGB(255, 255, 77, 7))
+                                  .make(),
+                              55.widthBox,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: List.generate(
+                                  data["p_colours"].length,
+                                  (index) => Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      VxBox()
+                                          .size(40, 40)
+                                          .roundedFull
+                                          .color(Color(data["p_colours"][index])
+                                              .withOpacity(1.0))
+                                          .margin(EdgeInsets.symmetric(
+                                              horizontal: 4))
+                                          .make()
+                                          .onTap(() {
+                                        controller.changeColorIndex(index);
+                                      }),
+                                      Visibility(
+                                          visible: index ==
+                                              controller.colorIndex.value,
+                                          child: Icon(
+                                            Icons.done,
+                                            color: Colors.white,
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ).box.padding(EdgeInsets.all(8)).make(),
+                          // Quantity Section design
+
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 100,
+                                child: "Quantity: "
+                                    .text
+                                    .color(Color.fromARGB(255, 255, 77, 7))
                                     .make(),
                               ),
-                            ),
-                          ],
-                        ).box.padding(EdgeInsets.all(8)).make(),
-                        // Quantity Section design
+                              Obx(
+                                () => Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: () {
+                                          controller.decreaseQunatity();
+                                          controller.calculationTotalPrice(
+                                              int.parse(data["p_price"]));
+                                        },
+                                        icon: Icon(Icons.remove)),
+                                    controller.quantity.value.text
+                                        .size(15)
+                                        .color(darkFontGrey)
+                                        .fontFamily(bold)
+                                        .make(),
+                                    IconButton(
+                                        onPressed: () {
+                                          controller.increaseQunatity(
+                                              int.parse(data["p_quantity"]));
+                                          controller.calculationTotalPrice(
+                                              int.parse(data["p_price"]));
+                                        },
+                                        icon: Icon(Icons.add)),
+                                    10.widthBox,
+                                    "Avilable(${data["p_quantity"]})"
+                                        .text
+                                        .color(textfieldGrey)
+                                        .make(),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ).box.padding(EdgeInsets.all(8)).make(),
 
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 100,
-                              child: "Quantity: "
-                                  .text
-                                  .color(Color.fromARGB(255, 255, 77, 7))
-                                  .make(),
-                            ),
-                            Row(
+                          // Total section design
+                          Obx(
+                            () => Row(
                               children: [
-                                IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.remove)),
-                                "0"
-                                    .text
-                                    .size(15)
-                                    .color(darkFontGrey)
-                                    .fontFamily(bold)
-                                    .make(),
-                                IconButton(
-                                    onPressed: () {}, icon: Icon(Icons.add)),
-                                10.widthBox,
-                                "Avilable(${data["p_quantity"]})"
-                                    .text
-                                    .color(textfieldGrey)
-                                    .make(),
+                                SizedBox(
+                                  width: 100,
+                                  child: "Total: "
+                                      .text
+                                      .color(Color.fromARGB(255, 255, 77, 7))
+                                      .make(),
+                                ),
+                                Row(
+                                  children: [
+                                    "₹"
+                                        .text
+                                        .color(redColor)
+                                        .fontFamily(bold)
+                                        .size(16)
+                                        .make(),
+                                    "${controller.totalPrice.value}"
+                                        .numCurrency
+                                        // .numCurrencyWithLocale(locale: "hi_IN")
+                                        .text
+                                        .color(redColor)
+                                        .fontFamily(bold)
+                                        .size(16)
+                                        .make(),
+                                  ],
+                                ),
                               ],
-                            ),
-                          ],
-                        ).box.padding(EdgeInsets.all(8)).make(),
-
-                        // Total section design
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 100,
-                              child: "Total: "
-                                  .text
-                                  .color(Color.fromARGB(255, 255, 77, 7))
-                                  .make(),
-                            ),
-                            "₹0.00"
-                                .text
-                                .color(redColor)
-                                .size(16)
-                                .fontFamily(bold)
-                                .make(),
-                          ],
-                        ).box.padding(EdgeInsets.all(8)).make(),
-                      ],
-                    ).box.white.shadowSm.make(),
+                            ).box.padding(EdgeInsets.all(8)).make(),
+                          ),
+                        ],
+                      ).box.white.shadowSm.make(),
+                    ),
 
                     //description section design
                     10.heightBox,
