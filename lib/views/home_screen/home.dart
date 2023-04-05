@@ -4,7 +4,7 @@ import 'package:eshop/views/cart_screen/cart_screen.dart';
 import 'package:eshop/views/category_screen/category_screen.dart';
 import 'package:eshop/views/home_screen/home_screen.dart';
 import 'package:eshop/views/profile_screen/profile_screen.dart';
-import 'package:get/get.dart';
+import 'package:eshop/widgets_common/exit_dialog.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -40,30 +40,35 @@ class Home extends StatelessWidget {
     ];
 
     var navBody = [
-     HomeScreen(),
-     CategoryScreen(),
-     CartScreen(),
-     ProfileScreen(),
+      HomeScreen(),
+      CategoryScreen(),
+      CartScreen(),
+      ProfileScreen(),
     ];
-    return Scaffold(
-      body: Column(
-        children: [
-          Obx(() => Expanded(
-              child: navBody.elementAt(controller.currentNavIndex.value))),
-        ],
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          items: navbarItem,
-          currentIndex: controller.currentNavIndex.value,
-          selectedItemColor: redColor,
-          selectedLabelStyle: TextStyle(fontFamily: semibold),
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: whiteColor,
-        
-          onTap: (value) {
-            controller.currentNavIndex.value = value;
-          },
+    return WillPopScope(
+      onWillPop: () async {
+        showDialog(context: context, builder: (context) => exitDialog(context),barrierDismissible: false);
+        return false;
+      },
+      child: Scaffold(
+        body: Column(
+          children: [
+            Obx(() => Expanded(
+                child: navBody.elementAt(controller.currentNavIndex.value))),
+          ],
+        ),
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            items: navbarItem,
+            currentIndex: controller.currentNavIndex.value,
+            selectedItemColor: redColor,
+            selectedLabelStyle: TextStyle(fontFamily: semibold),
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: whiteColor,
+            onTap: (value) {
+              controller.currentNavIndex.value = value;
+            },
+          ),
         ),
       ),
     );
