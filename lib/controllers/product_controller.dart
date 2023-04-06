@@ -28,6 +28,26 @@ class ProductController extends GetxController {
     }
   }
 
+  addToCart({title, img, sellername, color, qty, tprice, context}) async {
+    await firestore.collection(cartCollection).doc().set({
+      "title": title,
+      "img": img,
+      "sellername": sellername,
+      "color": color,
+      "qty": qty,
+      "tprice": tprice,
+      "added by": currentUser!.uid
+    }).catchError((error) {
+      VxToast.show(context, msg: error.toString());
+    });
+  }
+
+  resetValues() {
+    totalPrice.value = 0;
+    quantity.value = 0;
+    colorIndex.value = 0;
+  }
+
   getSubCategories(title) async {
     subcat.clear();
     var data = await rootBundle.loadString("lib/services/category_model.json");
