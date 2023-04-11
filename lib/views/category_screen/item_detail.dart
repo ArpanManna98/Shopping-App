@@ -1,6 +1,7 @@
 import 'package:eshop/consts/consts.dart';
 import 'package:eshop/consts/lists.dart';
 import 'package:eshop/controllers/product_controller.dart';
+import 'package:eshop/views/chat_screen/chat_screen.dart';
 import 'package:eshop/widgets_common/our_button.dart';
 
 class ItemDetail extends StatelessWidget {
@@ -132,7 +133,9 @@ class ItemDetail extends StatelessWidget {
                               Icons.message_rounded,
                               color: darkFontGrey,
                             ),
-                          ),
+                          ).onTap(() {
+                            Get.to(() => ChatScreen(),arguments: [data["p_seller"],data["vendor_id"]],);
+                          })
                         ],
                       )
                           .box
