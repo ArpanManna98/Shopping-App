@@ -9,6 +9,7 @@ class ChatController extends GetxController {
     super.onInit();
   }
 
+  var isLoading = false.obs;
   var chats = firestore.collection(chatsCollection);
   var friendName = Get.arguments[0];
   var friendId = Get.arguments[1];
@@ -18,6 +19,7 @@ class ChatController extends GetxController {
   dynamic chatDocId;
 
   getChatId() async {
+    isLoading(true);
     await chats
         .where("users", isEqualTo: {friendId: null, currentId: null})
         .limit(1)
@@ -39,6 +41,7 @@ class ChatController extends GetxController {
             });
           }
         });
+        isLoading(false);
   }
 
   sendMsg(String msg) async {

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/consts/consts.dart';
 import 'package:eshop/models/category_model.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ class ProductController extends GetxController {
   var quantity = 0.obs;
   var colorIndex = 0.obs;
   var totalPrice = 0.obs;
+  var isFav = false.obs;
 
   calculationTotalPrice(price) {
     totalPrice.value = price * quantity.value;
@@ -57,5 +59,17 @@ class ProductController extends GetxController {
     for (var e in s[0].subcategory) {
       subcat.add(e);
     }
+  }
+
+  addWishlist(docId) async {
+    await firestore.collection(productCollection).doc(docId).set({
+      "p_wishlist": FieldValue.arrayUnion([currentUser!.uid])
+    }, SetOptions(merge: true));
+  }
+
+  removeWishlist(docId) async {
+    await firestore.collection(productCollection).doc(docId).set({
+      "p_wishlist": FieldValue.arrayRemove([currentUser!.uid])
+    }, SetOptions(merge: true));
   }
 }

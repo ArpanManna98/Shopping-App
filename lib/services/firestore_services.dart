@@ -1,5 +1,5 @@
 import 'package:eshop/consts/consts.dart';
-import 'package:eshop/models/category_model.dart';
+
 
 class FirestoresServices {
   // Get user data from firestore
@@ -29,5 +29,15 @@ class FirestoresServices {
   // Delete cart items
   static deleteItems(docId) {
     return firestore.collection(cartCollection).doc(docId).delete();
+  }
+
+  // Get all chat messages
+  static getChatMessages(docId) {
+    return firestore
+        .collection(chatsCollection)
+        .doc(docId)
+        .collection(messagesCollection)
+        .orderBy("created_on", descending: false)
+        .snapshots();
   }
 }

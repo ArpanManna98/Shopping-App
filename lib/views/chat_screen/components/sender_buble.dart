@@ -1,6 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/consts/consts.dart';
+import 'package:intl/intl.dart' as intl;
 
-Widget SenderBubble() {
+Widget SenderBubble(DocumentSnapshot data) {
+  var t =
+      data["created_on"] == null ? DateTime.now() : data["created_on"].toDate();
+  var time = intl.DateFormat("h:mma").format(t);
+
   return Container(
     margin: EdgeInsets.only(bottom: 8),
     padding: EdgeInsets.all(8),
@@ -14,9 +20,9 @@ Widget SenderBubble() {
     ),
     child: Column(
       children: [
-        "Message here.....".text.white.size(16).make(),
+        "${data["msg"]}".text.white.size(16).make(),
         10.heightBox,
-        "10:00 AM".text.color(whiteColor.withOpacity(0.5)).make(),
+        time.text.color(whiteColor.withOpacity(0.5)).make(),
       ],
     ),
   );
