@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/consts/consts.dart';
 import 'package:eshop/controllers/cart_controller.dart';
 import 'package:eshop/services/firestore_services.dart';
+import 'package:eshop/views/cart_screen/shipping_screen.dart';
 import 'package:eshop/widgets_common/our_button.dart';
 
 class CartScreen extends StatelessWidget {
@@ -187,7 +188,7 @@ class CartScreen extends StatelessWidget {
                           color: redColor,
                           textColor: whiteColor,
                           onPress: () {
-                            print("working");
+                            Get.to(() => ShippingScreen());
                           }).box.width(context.screenWidth - 60).make(),
                     ],
                   ),

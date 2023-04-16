@@ -36,20 +36,24 @@ class ItemDetail extends StatelessWidget {
                   Icons.share,
                   // color: darkFontGrey,
                 )),
-            IconButton(
-                onPressed: () {
-                  if (controller.isFav.value) {
-                    controller.removeWishlist(data.id);
-                    controller.isFav(false);
-                  } else {
-                    controller.addWishlist(data.id);
-                    controller.isFav(true);
-                  }
-                },
-                icon: Icon(
-                  Icons.favorite_outline,
-                  // color: darkFontGrey,
-                ))
+            Obx(
+              () => IconButton(
+                  onPressed: () {
+                    if (controller.isFav.value) {
+                      controller.removeWishlist(data.id,context);
+                      // controller.isFav(false);
+                    } else {
+                      controller.addWishlist(data.id,context);
+                      // controller.isFav(true);
+                    }
+                  },
+                  icon: Icon(
+                    Icons.favorite_rounded,
+                    color: controller.isFav.value
+                        ? Color.fromARGB(255, 255, 4, 4)
+                        : darkFontGrey,
+                  )),
+            )
           ],
         ),
         body: Column(
@@ -144,7 +148,10 @@ class ItemDetail extends StatelessWidget {
                           ).onTap(() {
                             Get.to(
                               () => ChatScreen(),
-                              arguments: [data["p_seller"], data["vendor_id"]],
+                              arguments: [
+                                data["p_seller"],
+                                data["vendor_id"]
+                              ],
                             );
                           })
                         ],
@@ -185,9 +192,8 @@ class ItemDetail extends StatelessWidget {
                                         VxBox()
                                             .size(40, 40)
                                             .roundedFull
-                                            .color(
-                                                Color(data["p_colours"][index])
-                                                    .withOpacity(1.0))
+                                            .color(Color(data["p_colours"][index])
+                                                .withOpacity(1.0))
                                             .margin(EdgeInsets.symmetric(
                                                 horizontal: 4))
                                             .make()
@@ -225,7 +231,8 @@ class ItemDetail extends StatelessWidget {
                                           onPressed: () {
                                             controller.decreaseQunatity();
                                             controller.calculationTotalPrice(
-                                                int.parse(data["p_price"]));
+                                                int.parse(
+                                                    data["p_price"]));
                                           },
                                           icon: Icon(Icons.remove)),
                                       controller.quantity.value.text
@@ -236,9 +243,11 @@ class ItemDetail extends StatelessWidget {
                                       IconButton(
                                           onPressed: () {
                                             controller.increaseQunatity(
-                                                int.parse(data["p_quantity"]));
+                                                int.parse(
+                                                    data["p_quantity"]));
                                             controller.calculationTotalPrice(
-                                                int.parse(data["p_price"]));
+                                                int.parse(
+                                                    data["p_price"]));
                                           },
                                           icon: Icon(Icons.add)),
                                       10.widthBox,
@@ -374,7 +383,8 @@ class ItemDetail extends StatelessWidget {
                 color: redColor,
                 onPress: () {
                   controller.addToCart(
-                      color: data["p_colours"][controller.colorIndex.value],
+                      color: data["p_colours"]
+                          [controller.colorIndex.value],
                       context: context,
                       img: data["p_images"][0],
                       qty: controller.quantity.value,

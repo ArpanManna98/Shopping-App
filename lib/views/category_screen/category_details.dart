@@ -118,6 +118,7 @@ class CategortDetail extends StatelessWidget {
                               .padding(EdgeInsets.all(12))
                               .make()
                               .onTap(() {
+                            controller.checkIfFav(data[index]);
                             Get.to(() => ItemDetail(
                                 title: "${data[index]["p_name"]}",
                                 data: data[index]));
