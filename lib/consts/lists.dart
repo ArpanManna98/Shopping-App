@@ -36,3 +36,6 @@ const cartButtonDetails = [
   "Return Policy",
   "Support Policy"
 ];
+
+const paymentsmethodimges = [imgPaypal, imgStripe, imgCod];
+const paymentsmethodnames = [paypal,stripe,cod];

@@ -42,3 +42,6 @@ const sports = "Sports";
 const jwel = "Jwellery";
 const cell = "CellPhones & Tab";
 const furn = "Furniture";
+const paypal = "Paypal";
+const stripe = "Stripe";
+const cod = "Cash On Delivery";
