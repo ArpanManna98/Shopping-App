@@ -7,6 +7,7 @@ class CartController extends GetxController {
   var paymentIndex = 0.obs;
   late dynamic productSnapshot;
   var products = [];
+  var placingOrder = false.obs;
 
 // ShippingScreen textfield's Controllers
   var addressController = TextEditingController();
@@ -31,26 +32,28 @@ class CartController extends GetxController {
 
 //Order create methods
   placeMyOrder({required orderPaymentMethod, required totalAmount}) async {
+    placingOrder(true);
     await getProductDetails();
     await firestore.collection(ordersCollection).doc().set({
-      "order_code":"642554373",
-      "order_date":FieldValue.serverTimestamp(),
-      "order_by":currentUser!.uid,
-      "order_by_name":Get.find<HomeController>().username,
-      "order_by_email":currentUser!.email,
-      "order_by_address":addressController.text,
-      "order_by_state":stateController.text,
-      "order_by_city":cityController.text,
-      "order_by_phone":phoneController.text,
-      "order_by_pincode":pincodeController.text,
-      "shipping_method":"Home Delivery",
-      "payment_method":orderPaymentMethod,
-      "order_placed":true,
-      "order_confirmed":false,
+      "order_code": "642554373",
+      "order_date": FieldValue.serverTimestamp(),
+      "order_by": currentUser!.uid,
+      "order_by_name": Get.find<HomeController>().username,
+      "order_by_email": currentUser!.email,
+      "order_by_address": addressController.text,
+      "order_by_state": stateController.text,
+      "order_by_city": cityController.text,
+      "order_by_phone": phoneController.text,
+      "order_by_pincode": pincodeController.text,
+      "shipping_method": "Home Delivery",
+      "payment_method": orderPaymentMethod,
+      "order_placed": true,
+      "order_confirmed": false,
       "order_delivered": false,
-      "total_amount":totalAmount,
-      "orders":FieldValue.arrayUnion(products)
+      "total_amount": totalAmount,
+      "orders": FieldValue.arrayUnion(products)
     });
+    placingOrder(false);
   }
 
   // Get product details method
@@ -60,8 +63,18 @@ class CartController extends GetxController {
       products.add({
         "color": productSnapshot[i]["color"],
         "img": productSnapshot[i]["img"],
-        "qty": productSnapshot[i]["title"]
+        "qty": productSnapshot[i]["qty"],
+        "vendor_id": productSnapshot[i]["vendor_id"],
+        "totalprice": productSnapshot[i]["tprice"],
+        "title": productSnapshot[i]["title"]
       });
+    }
+  }
+
+  // Delete all products from cart
+  clearCart() {
+    for (var i = 0; i < productSnapshot.length; i++) {
+      firestore.collection(cartCollection).doc(productSnapshot[i].id).delete();
     }
   }
 }

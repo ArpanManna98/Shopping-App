@@ -17,6 +17,12 @@ class ProfileScreen extends StatelessWidget {
 
     return bgWidget(
       child: Scaffold(
+        // appBar: AppBar(
+        //   backgroundColor: redColor,
+        //   elevation: 0,
+        //   automaticallyImplyLeading: false,
+        //   title: "Account".text.fontFamily(semibold).color(darkFontGrey).make(),
+        // ),
         body: StreamBuilder(
           stream: FirestoresServices.getUser(currentUser!.uid),
           builder:
@@ -34,21 +40,22 @@ class ProfileScreen extends StatelessWidget {
                   padding: EdgeInsets.all(8),
                   child: Column(
                     children: [
+                      20.heightBox,
                       //Edit button design
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Icon(
-                          Icons.edit,
-                          color: whiteColor,
-                        ),
-                      ).onTap(() {
-                        controller.nameController.text = data['name'];
-                        // controller.passController.text = data['password'];
-                        Get.to(() => EditScreen(
-                              data: data,
-                            ));
-                      }),
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: Icon(
+                      //     Icons.edit,
+                      //     color: whiteColor,
+                      //   ),
+                      // ).onTap(() {
+                      //   controller.nameController.text = data['name'];
+                      //   // controller.passController.text = data['password'];
+                      //   Get.to(() => EditScreen(
+                      //         data: data,
+                      //       ));
+                      // }),
 
                       //User profile detail section design
 
@@ -79,21 +86,21 @@ class ProfileScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                          OutlinedButton(
-                            onPressed: () async {
-                              await Get.put(AuthController())
-                                  .signoutMethod(context);
-                              Get.offAll(() => const LoginScreen());
-                            },
-                            child: "Log out"
-                                .text
-                                .color(whiteColor)
-                                .fontFamily(semibold)
-                                .make(),
-                            style: OutlinedButton.styleFrom(
-                              side: BorderSide(color: whiteColor),
-                            ),
-                          ),
+                          // OutlinedButton(
+                          //   onPressed: () async {
+                          //     await Get.put(AuthController())
+                          //         .signoutMethod(context);
+                          //     Get.offAll(() => const LoginScreen());
+                          //   },
+                          //   child: "Log out"
+                          //       .text
+                          //       .color(whiteColor)
+                          //       .fontFamily(semibold)
+                          //       .make(),
+                          //   style: OutlinedButton.styleFrom(
+                          //     side: BorderSide(color: whiteColor),
+                          //   ),
+                          // ),
                         ],
                       ),
 
@@ -119,6 +126,116 @@ class ProfileScreen extends StatelessWidget {
                               width: context.screenWidth / 3.4),
                         ],
                       ),
+                      45.heightBox,
+                      Card(
+                        elevation: 1.0,
+                        color: Colors.amberAccent,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.shopping_bag,
+                              color: Colors.black,
+                            ),
+                            20.widthBox,
+                            "My Orders"
+                                .text
+                                // .fontFamily(customfont)
+                                .bold
+                                .black
+                                .size(20)
+                                .make(),
+                          ],
+                        ).box.padding(EdgeInsets.all(10)).make().onTap(() {}),
+                      ).box.height(70).make(),
+                      Card(
+                        elevation: 1.0,
+                        color: Colors.amberAccent,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.favorite_border,
+                              color: Colors.black,
+                            ),
+                            20.widthBox,
+                            "My Wishlists"
+                                .text
+                                // .fontFamily(customfont)
+                                .bold
+                                .black
+                                .size(20)
+                                .make(),
+                          ],
+                        ).box.padding(EdgeInsets.all(10)).make(),
+                      ).box.height(70).make().onTap(() {}),
+                      Card(
+                        elevation: 1.0,
+                        color: Colors.amberAccent,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.message,
+                              color: Colors.black,
+                            ),
+                            20.widthBox,
+                            "Messages"
+                                .text
+                                // .fontFamily(customfont)
+                                .bold
+                                .black
+                                .size(20)
+                                .make(),
+                          ],
+                        ).box.padding(EdgeInsets.all(10)).make(),
+                      ).box.height(70).make().onTap(() {}),
+                      Card(
+                        elevation: 1.0,
+                        color: Colors.amberAccent,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: Colors.black,
+                            ),
+                            20.widthBox,
+                            "Edit Account"
+                                .text
+                                // .fontFamily(customfont)
+                                .bold
+                                .black
+                                .size(20)
+                                .make(),
+                          ],
+                        ).box.padding(EdgeInsets.all(10)).make(),
+                      ).box.height(70).make().onTap(() {
+                        controller.nameController.text = data['name'];
+                        // controller.passController.text = data['password'];
+                        Get.to(() => EditScreen(
+                              data: data,
+                            ));
+                      }),
+                      Card(
+                        elevation: 1.0,
+                        color: Colors.amberAccent,
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.logout,
+                              color: Colors.black,
+                            ),
+                            20.widthBox,
+                            "Log Out"
+                                .text
+                                // .fontFamily(customfont)
+                                .bold
+                                .black
+                                .size(20)
+                                .make(),
+                          ],
+                        ).box.padding(EdgeInsets.all(10)).make(),
+                      ).box.height(70).make().onTap(() async {
+                        await Get.put(AuthController()).signoutMethod(context);
+                        Get.offAll(() => const LoginScreen());
+                      }),
                     ],
                   ),
                 ),

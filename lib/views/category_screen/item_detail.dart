@@ -383,6 +383,7 @@ class ItemDetail extends StatelessWidget {
                 color: redColor,
                 onPress: () {
                   controller.addToCart(
+                    vendorID: data["vendor_id"],
                       color: data["p_colours"]
                           [controller.colorIndex.value],
                       context: context,
