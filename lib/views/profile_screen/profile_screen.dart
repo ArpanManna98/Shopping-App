@@ -4,8 +4,11 @@ import 'package:eshop/controllers/auth_controller.dart';
 import 'package:eshop/controllers/profile_controller.dart';
 import 'package:eshop/services/firestore_services.dart';
 import 'package:eshop/views/auth_screen/login_screen.dart';
+import 'package:eshop/views/message_screen/message_screen.dart';
+import 'package:eshop/views/order_screen/order_screen.dart';
 import 'package:eshop/views/profile_screen/components/detailsCard.dart';
 import 'package:eshop/views/profile_screen/edit_screen.dart';
+import 'package:eshop/views/wishlist_screen/wishlist_screen.dart';
 import 'package:eshop/widgets_common/bgWidget.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -145,7 +148,9 @@ class ProfileScreen extends StatelessWidget {
                                 .size(20)
                                 .make(),
                           ],
-                        ).box.padding(EdgeInsets.all(10)).make().onTap(() {}),
+                        ).box.padding(EdgeInsets.all(10)).make().onTap(() {
+                          Get.to(() => OrderScreen());
+                        }),
                       ).box.height(70).make(),
                       Card(
                         elevation: 1.0,
@@ -166,7 +171,9 @@ class ProfileScreen extends StatelessWidget {
                                 .make(),
                           ],
                         ).box.padding(EdgeInsets.all(10)).make(),
-                      ).box.height(70).make().onTap(() {}),
+                      ).box.height(70).make().onTap(() {
+                        Get.to(() => WishlistScreen());
+                      }),
                       Card(
                         elevation: 1.0,
                         color: Colors.amberAccent,
@@ -186,7 +193,7 @@ class ProfileScreen extends StatelessWidget {
                                 .make(),
                           ],
                         ).box.padding(EdgeInsets.all(10)).make(),
-                      ).box.height(70).make().onTap(() {}),
+                      ).box.height(70).make().onTap(() {Get.to(() => MessageScreen());}),
                       Card(
                         elevation: 1.0,
                         color: Colors.amberAccent,

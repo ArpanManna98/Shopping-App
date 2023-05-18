@@ -1,6 +1,5 @@
 import 'package:eshop/consts/consts.dart';
 
-
 class FirestoresServices {
   // Get user data from firestore
   static getUser(uid) {
@@ -38,6 +37,30 @@ class FirestoresServices {
         .doc(docId)
         .collection(messagesCollection)
         .orderBy("created_on", descending: false)
+        .snapshots();
+  }
+
+  // Get Order Details
+  static getOrderDetails() {
+    return firestore
+        .collection(ordersCollection)
+        .where("order_by", isEqualTo: currentUser!.uid)
+        .snapshots();
+  }
+
+  // Get Wishlist Details
+  static getWishlist() {
+    return firestore
+        .collection(productCollection)
+        .where("p_wishlist", arrayContains: currentUser!.uid)
+        .snapshots();
+  }
+
+  // Get All Messages
+  static getAllMessages() {
+    return firestore
+        .collection(chatsCollection)
+        .where("fromId",isEqualTo: currentUser!.uid)
         .snapshots();
   }
 }
