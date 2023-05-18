@@ -50,6 +50,7 @@ class CartController extends GetxController {
       "order_placed": true,
       "order_confirmed": false,
       "order_delivered": false,
+      "order_on_delivery": false,
       "total_amount": totalAmount,
       "orders": FieldValue.arrayUnion(products)
     });

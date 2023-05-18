@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eshop/consts/consts.dart';
 import 'package:eshop/services/firestore_services.dart';
+import 'package:eshop/views/order_screen/orderDetail_screen.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -62,7 +63,9 @@ class OrderScreen extends StatelessWidget {
                     ],
                   ),
                   trailing: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.to(() => OrderDetails(data: data[index],));
+                      },
                       icon: Icon(
                         Icons.arrow_forward_ios_rounded,
                         color: darkFontGrey,
