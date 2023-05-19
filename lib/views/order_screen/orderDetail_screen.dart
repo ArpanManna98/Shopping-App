@@ -1,5 +1,7 @@
 import 'package:eshop/consts/consts.dart';
+import 'package:eshop/views/order_screen/components/order_info.dart';
 import 'package:eshop/views/order_screen/components/order_status.dart';
+import 'package:intl/intl.dart' as intl;
 
 class OrderDetails extends StatelessWidget {
   final dynamic data;
@@ -36,6 +38,26 @@ class OrderDetails extends StatelessWidget {
               icon: Icons.done_all_outlined,
               title: "Delivered",
               showDone: data["order_delivered"]),
+              Divider(),
+              10.heightBox,
+               orderInfoDetails(
+                d1: data["order_code"],
+                d2: data["shipping_method"],
+                title1: "Order Id",
+                title2: "Shipping Method",
+               ),
+                orderInfoDetails(
+                d1: intl.DateFormat().add_yMd().format((data["order_date"].toDate())),
+                d2: data["payment_method"],
+                title1: "Order Date",
+                title2: "Payment Method",
+               ),
+                orderInfoDetails(
+                d1: "Unpaid",
+                d2: "Order Placed",
+                title1: "Payment Status",
+                title2: "Delivery Status",
+               ),
         ],
       ),
     );
